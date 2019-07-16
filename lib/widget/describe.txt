@@ -1,0 +1,8 @@
+控件
+    能独立抽取使用，尽量减少依赖其他控件或者类；
+    可移植到其他项目重复使用；
+
+ -------------------------------------------------
+ widget
+    can be used independently.
+    can be moved to another project easily.
