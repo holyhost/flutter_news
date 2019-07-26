@@ -3,6 +3,7 @@ import './entity/zhihu_model.dart';
 import './entity/zhihu_bean.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import '../theme/api.dart';
+import 'news_page_detail.dart';
 
 class NewsPage extends StatefulWidget {
   @override
@@ -63,12 +64,10 @@ class _NewsPageState extends State<NewsPage> {
       title: Text(title),
       contentPadding: EdgeInsets.fromLTRB(15, 5, 15, 5),
       onTap: (){
+        print("title:$title----coverUrl:$coverUrl----id:$id");
           Navigator.push(
               context,
-              MaterialPageRoute(builder: (context)=> WebView(
-
-               initialUrl: API_ZHIHU_BODY+ "${id}",
-              ))
+              MaterialPageRoute(builder: (context)=> NewsPageDetail(id))
           );
       },
     );
