@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import './entity/page_model.dart';
+import 'component/cata_type_component.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -17,8 +18,8 @@ class _HomePageState extends State<HomePage> {
       print(e);
     });
 
-    return Center(
-      child: Text("Home"),
+    return Container(
+      child: CataTypeComponent(),
     );
   }
 }
