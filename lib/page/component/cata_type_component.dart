@@ -12,14 +12,14 @@ class _CataTypeComponentState extends State<CataTypeComponent> {
 
 
   _CataTypeComponentState(){
-    getCataIcons()
-        .then((icons){
-      print(icons.toString());
-      setState(() {
-        this.data = icons;
-      });
-    })
-        .catchError((e){
+      getCataIcons()
+          .then((icons){
+        print(icons.toString());
+        setState(() {
+          this.data = icons;
+        });
+      })
+          .catchError((e){
       print(e);
     });
   }
@@ -27,81 +27,57 @@ class _CataTypeComponentState extends State<CataTypeComponent> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: (this.data ==null||this.data.length<1)?null:CataIconColum(columnBeans:this.data),
+//      child: (this.data ==null||this.data.length<1)?null:CataIconColum(columnBeans:this.data),
+    padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+      child: (this.data ==null||this.data.length<1)?null:_buildGridView(this.data),
     );
   }
-}
+  
+  
+  _buildGridView(List<CataIconBean> data){
 
-class CataIconColum extends StatefulWidget {
+    List<CataIconItem> rows = List();
+    for(int i=0;i<data.length;i++){
+      if(i%10==0){
+        List<CataIconItem> rows = List();
+        for(int j=i;j<i+10;j++){
 
-  final List<CataIconBean> columnBeans;
-
-  CataIconColum({this.columnBeans});
-
-  @override
-  _CataColumState createState() => _CataColumState();
-}
-
-class _CataColumState extends State<CataIconColum> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: _buildColum(),
-      ),
-    );
-  }
-
-  List<CataIconRow>_buildColum(){
-    List<CataIconRow> rows = List();
-    for(int i=0;i<widget.columnBeans.length;i++){
-      if(i%5 == 0){
-        List<CataIconBean> rowBeans = List();
-        for(int j=0+i;j<5+i;j++){
-          rowBeans.add(widget.columnBeans[j]);
         }
-        rows.add(CataIconRow(rowBeans: rowBeans,));
       }
+      rows.add(CataIconItem(bean: data[i],));
     }
-    return rows;
-  }
-}
 
+   return  PageView(
+      children: <Widget>[
+    GridView.count(
 
-class CataIconRow extends StatefulWidget {
-  List<CataIconBean> rowBeans;
+    mainAxisSpacing: 10,
+      crossAxisSpacing: 30,
+      padding: EdgeInsets.all(5),
+      crossAxisCount: 5,
+      childAspectRatio: 5/8,
+      children: rows,
 
+    ),
+    GridView.count(
 
-  CataIconRow({this.rowBeans});
+    mainAxisSpacing: 10,
+    crossAxisSpacing: 30,
+    padding: EdgeInsets.all(5),
+    crossAxisCount: 5,
+    childAspectRatio: 5/8,
+    children: rows,
 
-  @override
-  _CataIconRowState createState() => _CataIconRowState();
-}
-
-class _CataIconRowState extends State<CataIconRow> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Row(
-          children: _buildRowWidgets(),
-      ),
+    )
+      ],
     );
   }
-
-  List<Widget> _buildRowWidgets(){
-    List<Widget> rows = List();
-    for(int i =0;i<widget.rowBeans.length;i++){
-      rows.add(CataIconItem(bean: widget.rowBeans[i],));
-    }
-    return rows;
-  }
 }
+
 
 class CataIconItem extends StatefulWidget {
 
   final CataIconBean bean;
-
-
   CataIconItem({this.bean});
 
   @override
@@ -111,7 +87,6 @@ class CataIconItem extends StatefulWidget {
 class _CataIconItemState extends State<CataIconItem> {
   @override
   Widget build(BuildContext context) {
-    final Orientation orientation = MediaQuery.of(context).orientation;
     return Container(
       child:Column(
         children: <Widget>[
@@ -119,7 +94,12 @@ class _CataIconItemState extends State<CataIconItem> {
             widget.bean.src,
             fit: BoxFit.cover,
           ),
-          Text(widget.bean.title),
+          SizedBox(height: 5.0,),
+          Text(widget.bean.title,
+            style: TextStyle(
+              fontSize: 12.0
+            ),
+          ),
         ],
       ),
     );

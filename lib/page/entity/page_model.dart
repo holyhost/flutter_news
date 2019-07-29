@@ -8,6 +8,9 @@ Future<List<CataIconBean>> getCataIcons() async{
     Response<String> response = await Dio().get(API_CATA_ICONS);
     List jsonArray = json.decode(response.toString());
     List<CataIconBean> icons = jsonArray.map((item)=> new CataIconBean.fromJson(item)).toList();
+    for(int i = 0;i<icons.length;i++){
+      icons[i].src = API_HOST+icons[i].src;
+    }
     return Future.value(icons);
   }catch (e){
     print(e.toString());
