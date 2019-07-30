@@ -19,7 +19,11 @@ class _HomePageState extends State<HomePage> {
     });
 
     return Container(
-      child: CataTypeComponent(),
+      child: Column(
+        children: <Widget>[
+          CataTypeComponent(),
+        ],
+      ),
     );
   }
 }
